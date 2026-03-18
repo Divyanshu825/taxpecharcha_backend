@@ -1,0 +1,19 @@
+{
+  "name": "taxpecharcha_backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "node": "^25.8.1",
+    "nodemon": "^3.1.14",
+    "resend": "^6.9.4"
+  }
+}
