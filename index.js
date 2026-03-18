@@ -4,19 +4,25 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 dotenv.config();
 const resend = new Resend(process.env.RESEND_API_KEY);
+// ✅ test route
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
+
 
 app.post("/send-mail", async (req, res) => {
-    const { name, email, message } = req.body;
-    try {
-        const data = await resend.emails.send({
-            from: "onboarding@resend.dev",
-            to: "divygupta825@gmail.com",
-            subject: "New Contact Message",
-            html: `
+  const { name, email, message } = req.body;
+  try {
+    const data = await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: "divygupta825@gmail.com",
+      subject: "New Contact Message",
+      html: `
   <div style="font-family: Arial, sans-serif; background-color: #f4f6f8; padding: 20px;">
     
     <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
@@ -53,19 +59,17 @@ app.post("/send-mail", async (req, res) => {
 
   </div>
 `,
-        });
+    });
 
-        res.json(data); // actual response bhejo
-    } catch (err) {
-        res.status(500).send("Error");
-    }
+    res.json(data); // actual response bhejo
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
 });
-
-app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
-
 app.listen(PORT, () => {
-    console.log("Server running");
+  console.log(`Server running on port ${PORT}`);
 });
